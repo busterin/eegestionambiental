@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gestión de recursos (Prototipo)</title>
+  <title>Gestión Ambiental (Prototipo)</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -12,8 +12,8 @@
     <!-- INTRO -->
     <section id="introScreen" class="intro">
       <div class="intro-content">
-        <div class="intro-title">MONO GAME</div>
-        <img class="intro-logo" src="images/Mono.png" alt="Mono Gnomo" />
+        <div class="intro-title">Gestión Ambiental</div>
+        <img class="intro-logo" src="images/logo.png" alt="Logo" />
 
         <div class="intro-actions">
           <button id="introStartBtn" class="btn intro-btn" type="button">COMENZAR</button>
@@ -32,13 +32,14 @@
           <button id="prevAvatarBtn" class="carousel-btn" type="button" aria-label="Anterior">‹</button>
 
           <div class="carousel-center">
-            <img id="avatarPreviewImg" class="carousel-img" src="images/buster1.PNG" alt="Buster" />
-            <div id="avatarPreviewName" class="carousel-name">Buster</div>
+            <img id="avatarPreviewImg" class="carousel-img" src="images/avatar1.png" alt="Avatar" />
+            <!-- (Nombre eliminado a propósito) -->
           </div>
 
           <button id="nextAvatarBtn" class="carousel-btn" type="button" aria-label="Siguiente">›</button>
         </div>
 
+        <!-- Dots (opcional) -->
         <div class="carousel-dots" aria-hidden="true">
           <span id="dot0" class="dot-indicator active"></span>
           <span id="dot1" class="dot-indicator"></span>
@@ -72,7 +73,7 @@
         <div class="brand">
           <div class="dot"></div>
           <div>
-            <div class="title">Gestión de recursos</div>
+            <div class="title">Gestión Ambiental</div>
             <div class="subtitle">Toca los puntos rojos cuando aparezcan</div>
           </div>
         </div>
@@ -91,7 +92,7 @@
 
       <main class="stage">
         <div id="map" class="map" aria-label="Mapa del juego">
-          <img id="playerImg" class="buster-img" src="images/buster1.PNG" alt="Personaje seleccionado" />
+          <img id="playerImg" class="buster-img" src="images/avatar1.png" alt="Avatar seleccionado" />
         </div>
       </main>
     </div>
@@ -201,8 +202,8 @@
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="deckTitle">
       <div class="modal-head">
         <div>
-          <div id="deckTitle" class="modal-title">Cartas</div>
-          <div class="modal-text">Pulsa una carta para ver su info.</div>
+          <div id="deckTitle" class="modal-title">Equipo</div>
+          <div class="modal-text">Pulsa un personaje para ver su info.</div>
         </div>
         <button id="closeDeckBtn" class="icon-btn" type="button" aria-label="Cerrar">✕</button>
       </div>
@@ -218,7 +219,7 @@
     <div class="modal-card modal-card-small" role="dialog" aria-modal="true" aria-labelledby="cardInfoTitle">
       <div class="modal-head">
         <div>
-          <div id="cardInfoTitle" class="modal-title">Carta</div>
+          <div id="cardInfoTitle" class="modal-title">Personaje</div>
           <div id="cardInfoText" class="modal-text">Prueba</div>
         </div>
         <button id="closeCardInfoBtn" class="icon-btn" type="button" aria-label="Cerrar">✕</button>
