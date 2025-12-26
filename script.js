@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  /* ✅ FIX: altura real en móviles (evita corte abajo) */
   function setAppHeightVar() {
     const h = window.innerHeight;
     document.documentElement.style.setProperty("--appH", `${h}px`);
@@ -8,19 +7,12 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", setAppHeightVar);
   window.addEventListener("orientationchange", setAppHeightVar);
 
-  // -------------------------
-  // ✅ DURACIÓN DE PARTIDA (oculta)
-  // -------------------------
   const GAME_DURATION_MS = 5 * 60 * 1000; // 5 minutos
   let gameEndAt = null;
   let gameClockTimer = null;
 
-  // ✅ nunca más de 10 puntos activos a la vez
   const MAX_ACTIVE_POINTS = 10;
 
-  // -------------------------
-  // ✅ ETIQUETAS NUEVAS
-  // -------------------------
   const TAGS = [
     "Sostenibilidad",
     "Transporte sostenible",
@@ -30,46 +22,37 @@ document.addEventListener("DOMContentLoaded", () => {
     "Reciclaje"
   ];
 
-  // -------------------------
-  // ✅ 30 MISIONES NUEVAS (con etiqueta)
-  // -------------------------
   const MISSIONS = [
-    // Sostenibilidad (5)
     { id: "m1",  title: "Plan de consumo responsable", internalTag: "Sostenibilidad", text: "Define una pauta rápida para reducir consumos innecesarios en el equipo sin frenar la actividad." },
     { id: "m2",  title: "Checklist de compras verdes", internalTag: "Sostenibilidad", text: "Crea un criterio de compra sostenible para materiales y proveedores en 10 minutos." },
     { id: "m3",  title: "Mapa de impactos", internalTag: "Sostenibilidad", text: "Identifica los 3 impactos ambientales principales del día y prioriza acciones." },
     { id: "m4",  title: "Revisión de hábitos", internalTag: "Sostenibilidad", text: "Detecta un hábito poco sostenible y propón una alternativa viable para el equipo." },
     { id: "m5",  title: "Objetivo semanal verde", internalTag: "Sostenibilidad", text: "Define un objetivo ambiental simple y medible para la semana." },
 
-    // Transporte sostenible (5)
     { id: "m6",  title: "Ruta eficiente", internalTag: "Transporte sostenible", text: "Optimiza una ruta para reducir desplazamientos y tiempo total." },
     { id: "m7",  title: "Plan de movilidad compartida", internalTag: "Transporte sostenible", text: "Organiza un sistema de coche compartido para dos trayectos recurrentes." },
     { id: "m8",  title: "Cambio modal", internalTag: "Transporte sostenible", text: "Propón cómo sustituir un trayecto en coche por alternativa más sostenible sin perder operativa." },
     { id: "m9",  title: "Punto de encuentro", internalTag: "Transporte sostenible", text: "Define un punto logístico para agrupar recogidas y reducir viajes duplicados." },
     { id: "m10", title: "Comunicación de movilidad", internalTag: "Transporte sostenible", text: "Redacta un mensaje breve para impulsar movilidad sostenible sin que suene obligatorio." },
 
-    // Eficiencia energética (5)
     { id: "m11", title: "Luces y equipos", internalTag: "Eficiencia energética", text: "Revisa 3 focos de consumo y define acciones inmediatas (apagados, horarios, automatización)." },
     { id: "m12", title: "Modo ahorro", internalTag: "Eficiencia energética", text: "Configura un protocolo rápido de ahorro energético para el cierre del día." },
     { id: "m13", title: "Optimizar climatización", internalTag: "Eficiencia energética", text: "Ajusta el uso de climatización para reducir consumo manteniendo confort básico." },
     { id: "m14", title: "Stand-by cero", internalTag: "Eficiencia energética", text: "Elimina consumos en stand-by en un área y deja un recordatorio visible." },
     { id: "m15", title: "Medición express", internalTag: "Eficiencia energética", text: "Define una métrica sencilla para controlar consumo energético semanal." },
 
-    // Energías renovables (5)
     { id: "m16", title: "Plan solar básico", internalTag: "Energías renovables", text: "Propón un esquema de aprovechamiento solar (aunque sea conceptual) para un espacio." },
     { id: "m17", title: "Divulgación renovable", internalTag: "Energías renovables", text: "Crea una mini explicación clara para que cualquiera entienda por qué apostar por renovables." },
     { id: "m18", title: "Priorizar fuentes limpias", internalTag: "Energías renovables", text: "Decide qué fuentes renovables encajan mejor según uso y contexto del equipo." },
     { id: "m19", title: "Contrato verde", internalTag: "Energías renovables", text: "Prepara un checklist para validar si un suministro es realmente renovable." },
     { id: "m20", title: "Energía para eventos", internalTag: "Energías renovables", text: "Diseña un plan para reducir uso de generadores y favorecer energía limpia en un evento." },
 
-    // Cambio climático (5)
     { id: "m21", title: "Riesgo climático", internalTag: "Cambio climático", text: "Detecta un riesgo climático (calor, lluvia, etc.) y propone un plan de adaptación rápido." },
     { id: "m22", title: "Mensaje de concienciación", internalTag: "Cambio climático", text: "Redacta un mensaje breve que conecte acciones pequeñas con impacto real." },
     { id: "m23", title: "Plan de resiliencia", internalTag: "Cambio climático", text: "Crea 3 medidas para mejorar resiliencia del equipo ante eventos extremos." },
     { id: "m24", title: "Huella rápida", internalTag: "Cambio climático", text: "Identifica 2 actividades que más emiten y una mejora inmediata para cada una." },
     { id: "m25", title: "Compromiso público", internalTag: "Cambio climático", text: "Propón un compromiso simple y comunicable para reducir impacto climático." },
 
-    // Reciclaje (5)
     { id: "m26", title: "Puntos de reciclaje", internalTag: "Reciclaje", text: "Reorganiza puntos de reciclaje para que sean obvios y accesibles en un espacio." },
     { id: "m27", title: "Separación correcta", internalTag: "Reciclaje", text: "Crea una guía visual rápida para evitar errores típicos al separar residuos." },
     { id: "m28", title: "Reducir residuos", internalTag: "Reciclaje", text: "Elige un residuo recurrente y propone sustitución o reducción inmediata." },
@@ -77,30 +60,23 @@ document.addEventListener("DOMContentLoaded", () => {
     { id: "m30", title: "Reutilización creativa", internalTag: "Reciclaje", text: "Propón una forma de reutilizar un material común antes de desecharlo." }
   ];
 
-  // -------------------------
-  // ✅ 10 PERSONAJES (2 tags cada uno) + imágenes
-  // (Asignación “al azar” pero fija/determinística para no cambiar en cada recarga)
-  // -------------------------
+  // ✅ Nombres inventados (10)
   const TEAM_MEMBERS = [
-    { id: "p1",  name: "Personaje 1",  img: "images/personaje1.png",  tags: ["Sostenibilidad", "Reciclaje"] },
-    { id: "p2",  name: "Personaje 2",  img: "images/personaje2.png",  tags: ["Transporte sostenible", "Cambio climático"] },
-    { id: "p3",  name: "Personaje 3",  img: "images/personaje3.png",  tags: ["Eficiencia energética", "Energías renovables"] },
-    { id: "p4",  name: "Personaje 4",  img: "images/personaje4.png",  tags: ["Sostenibilidad", "Eficiencia energética"] },
-    { id: "p5",  name: "Personaje 5",  img: "images/personaje5.png",  tags: ["Reciclaje", "Cambio climático"] },
-    { id: "p6",  name: "Personaje 6",  img: "images/personaje6.png",  tags: ["Transporte sostenible", "Eficiencia energética"] },
-    { id: "p7",  name: "Personaje 7",  img: "images/personaje7.png",  tags: ["Energías renovables", "Sostenibilidad"] },
-    { id: "p8",  name: "Personaje 8",  img: "images/personaje8.png",  tags: ["Cambio climático", "Energías renovables"] },
-    { id: "p9",  name: "Personaje 9",  img: "images/personaje9.png",  tags: ["Reciclaje", "Transporte sostenible"] },
-    { id: "p10", name: "Personaje 10", img: "images/personaje10.png", tags: ["Eficiencia energética", "Sostenibilidad"] }
+    { id: "p1",  name: "Nora Verde",     img: "images/personaje1.png",  tags: ["Sostenibilidad", "Reciclaje"] },
+    { id: "p2",  name: "Leo Ruta",       img: "images/personaje2.png",  tags: ["Transporte sostenible", "Cambio climático"] },
+    { id: "p3",  name: "Vera Watt",      img: "images/personaje3.png",  tags: ["Eficiencia energética", "Energías renovables"] },
+    { id: "p4",  name: "Gael Eco",       img: "images/personaje4.png",  tags: ["Sostenibilidad", "Eficiencia energética"] },
+    { id: "p5",  name: "Mía Circular",   img: "images/personaje5.png",  tags: ["Reciclaje", "Cambio climático"] },
+    { id: "p6",  name: "Izan Movil",     img: "images/personaje6.png",  tags: ["Transporte sostenible", "Eficiencia energética"] },
+    { id: "p7",  name: "Luna Solar",     img: "images/personaje7.png",  tags: ["Energías renovables", "Sostenibilidad"] },
+    { id: "p8",  name: "Bruno Clima",    img: "images/personaje8.png",  tags: ["Cambio climático", "Energías renovables"] },
+    { id: "p9",  name: "Sara Reusa",     img: "images/personaje9.png",  tags: ["Reciclaje", "Transporte sostenible"] },
+    { id: "p10", name: "Hugo Ahorro",    img: "images/personaje10.png", tags: ["Eficiencia energética", "Sostenibilidad"] }
   ];
 
-  // -------------------------
-  // Tiempos
-  // -------------------------
-  const MISSION_LIFETIME_MS = 2 * 60 * 1000;  // rojo antes de perderse
-  const EXECUTION_TIME_MS   = 60 * 1000;      // ✅ 1 minuto en amarillo
+  const MISSION_LIFETIME_MS = 2 * 60 * 1000;
+  const EXECUTION_TIME_MS   = 60 * 1000;
 
-  // ✅ regla: match suma 80%, no match suma 10%
   const MATCH_ADD = 0.8;
   const NO_MATCH_ADD = 0.1;
 
@@ -110,9 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const SPAWN_MIN_DELAY_MS = 900;
   const SPAWN_MAX_DELAY_MS = 3800;
 
-  // -------------------------
-  // DOM
-  // -------------------------
   const introScreen = document.getElementById("introScreen");
   const introStartBtn = document.getElementById("introStartBtn");
   const introInfoBtn = document.getElementById("introInfoBtn");
@@ -171,9 +144,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const specialCancelBtn = document.getElementById("specialCancelBtn");
   const specialAcceptBtn = document.getElementById("specialAcceptBtn");
 
-  // -------------------------
-  // Estado
-  // -------------------------
   let score = 0;
   let pendingMissions = [...MISSIONS];
   let activePoints = new Map();
@@ -187,12 +157,10 @@ document.addEventListener("DOMContentLoaded", () => {
   let spawnTimer = null;
   let noSpawnRect = null;
 
-  // ✅ Equipo (6)
   let selectedTeamIds = new Set();
   let availableCharacters = [];
   let availableCards = [];
 
-  // ✅ Avatares (solo 2) sin nombre
   const AVATARS = [
     { key: "a1", src: "images/avatar1.png", alt: "Avatar 1" },
     { key: "a2", src: "images/avatar2.png", alt: "Avatar 2" }
@@ -238,16 +206,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function normalizeTag(tag){
     const t = String(tag || "").trim().toLowerCase();
-
-    // normalización sencilla para evitar acentos / variantes
     if (t.includes("sosten")) return "Sostenibilidad";
     if (t.includes("transporte")) return "Transporte sostenible";
     if (t.includes("eficien")) return "Eficiencia energética";
     if (t.includes("renovable")) return "Energías renovables";
     if (t.includes("clim")) return "Cambio climático";
     if (t.includes("recicl")) return "Reciclaje";
-
-    // fallback
     return tag;
   }
 
@@ -287,9 +251,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return !(right < noSpawnRect.left || left > noSpawnRect.right || bottom < noSpawnRect.top || top > noSpawnRect.bottom);
   }
 
-  // -------------------------
-  // Pantallas
-  // -------------------------
   function goToStartScreen(){
     introScreen.classList.add("hidden");
     startScreen.classList.remove("hidden");
@@ -303,9 +264,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderTeamSelection();
   }
 
-  // -------------------------
-  // Avatar carousel (solo imagen)
-  // -------------------------
   function animateCarousel(direction){
     const dx = direction > 0 ? 24 : -24;
     avatarPreviewImg.animate(
@@ -334,9 +292,6 @@ document.addEventListener("DOMContentLoaded", () => {
     renderAvatarCarousel(+1);
   }
 
-  // -------------------------
-  // Equipo (6 de 10) - mostrar etiquetas
-  // -------------------------
   function updateTeamUI(){
     const n = selectedTeamIds.size;
     teamCountEl.textContent = String(n);
@@ -405,9 +360,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return true;
   }
 
-  // -------------------------
-  // Normalización tamaño sprite mapa (se mantiene)
-  // -------------------------
   const spriteBoxCache = new Map();
   let referenceVisibleHeightPx = null;
 
@@ -503,9 +455,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // -------------------------
-  // Reloj oculto
-  // -------------------------
   function startGameClock(){
     clearInterval(gameClockTimer);
     gameEndAt = performance.now() + GAME_DURATION_MS;
@@ -534,9 +483,6 @@ document.addEventListener("DOMContentLoaded", () => {
     finishGame();
   }
 
-  // -------------------------
-  // Juego
-  // -------------------------
   function startGame(){
     teamScreen.classList.add("hidden");
     gameRoot.classList.remove("hidden");
@@ -961,12 +907,9 @@ document.addEventListener("DOMContentLoaded", () => {
     setGlobalPause(false);
   }
 
-  // -------------------------
   // EVENTS
-  // -------------------------
   introStartBtn.addEventListener("click", goToStartScreen);
 
-  // Info modal
   introInfoBtn?.addEventListener("click", ()=>showModal(infoModal));
   closeInfoBtn?.addEventListener("click", ()=>hideModal(infoModal));
   infoModal?.addEventListener("click", (e)=>{ if (e.target === infoModal) hideModal(infoModal); });
@@ -985,7 +928,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Avatar -> Team
   startBtn.addEventListener("click", ()=>{
     selectedTeamIds = new Set();
     teamConfirmBtn.disabled = true;
@@ -994,14 +936,12 @@ document.addEventListener("DOMContentLoaded", () => {
     goToTeamScreen();
   });
 
-  // Confirm team -> Start game
   teamConfirmBtn.addEventListener("click", ()=>{
     if (selectedTeamIds.size !== 6) return;
     if (!commitTeam()) return;
     startGame();
   });
 
-  // Habilidad avatar
   playerImg.addEventListener("click", openSpecialModal);
 
   closeModalBtn.addEventListener("click", closeMissionModal);
@@ -1035,10 +975,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!gameRoot.classList.contains("hidden")) computeNoSpawnRect();
   });
 
-  // init
   renderAvatarCarousel(0);
 
-  // referencia tamaño sprite
   if (playerImg?.getAttribute("src")){
     const src = playerImg.getAttribute("src");
     playerImg.addEventListener("load", async ()=>{
