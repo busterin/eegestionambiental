@@ -7,7 +7,8 @@
   --accent:#55d6ff;
   --danger:#ff3b3b;
   --warn:#ffd54a;
-  --mustard:#c9a332;
+  --mustard:#d4b02a;   /* ✅ amarillo mostaza */
+  --mustard2:#c39a18;  /* ✅ para degradado */
   --ok:#2ee59d;
   --shadow: 0 18px 50px rgba(0,0,0,.45);
   --radius:16px;
@@ -15,7 +16,7 @@
   --appH: 100vh;
 }
 
-/* ✅ No scroll en toda la app (reforzado) */
+/* ✅ No scroll en toda la app */
 html,body{
   height:100%;
   margin:0;
@@ -24,7 +25,7 @@ html,body{
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
-/* ✅ Fondo azul claro para TODO el juego */
+/* ✅ Fondo azul claro */
 body{
   position: fixed;
   inset: 0;
@@ -62,7 +63,7 @@ img{ max-width:100%; height:auto; }
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap: 26px;             /* ✅ más separación general */
+  gap: 26px;
   text-align:center;
 }
 
@@ -73,20 +74,15 @@ img{ max-width:100%; height:auto; }
   letter-spacing: .5px;
   text-transform: uppercase;
   font-family:
-    "Fredoka One",
-    "Baloo 2",
-    "Nunito",
-    "Arial Rounded MT Bold",
-    system-ui,
-    sans-serif;
+    "Fredoka One","Baloo 2","Nunito","Arial Rounded MT Bold",
+    system-ui,sans-serif;
 
-  color: #ffffff;        /* ✅ blanco */
+  color: #ffffff;
   text-shadow:
     0 8px 0 rgba(0,0,0,.22),
     0 18px 38px rgba(0,0,0,.30);
 }
 
-/* ✅ más separación título/logo */
 .intro-logo{
   width: min(760px, 100%);
   max-height: 42vh;
@@ -97,7 +93,6 @@ img{ max-width:100%; height:auto; }
   margin-top: 2px;
 }
 
-/* ✅ más separación logo/botones */
 .intro-actions{
   margin-top: 6px;
   display:flex;
@@ -108,9 +103,7 @@ img{ max-width:100%; height:auto; }
   width: min(520px, 100%);
 }
 
-.intro-btn{
-  width: min(280px, 100%);
-}
+.intro-btn{ width: min(280px, 100%); }
 
 .intro-info-btn{
   width: 46px;
@@ -270,9 +263,21 @@ img{ max-width:100%; height:auto; }
   place-items:center;
   backdrop-filter: blur(8px);
   color:#fff;
+  overflow:hidden; /* ✅ por el icono-imagen */
 }
 .hud-icon-btn:active{ transform: translateY(1px); }
+
 .deck-icon{ font-size:20px; }
+
+/* ✅ icono deck como avatar */
+.deck-avatar-icon{
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  object-fit: contain;
+  display:block;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.25));
+}
 
 .stage{
   flex: 1 1 auto;
@@ -281,13 +286,17 @@ img{ max-width:100%; height:auto; }
   min-height: 0;
 }
 
-/* ---------- MAP ---------- */
+/* ---------- MAP (✅ vuelve la cuadrícula) ---------- */
 .map{
   flex:1;
   min-height: 0;
   position:relative;
   border-radius: var(--radius);
-  background: rgba(255,255,255,.18);
+  background:
+    radial-gradient(800px 500px at 70% 30%, rgba(255,255,255,.14), transparent 55%),
+    linear-gradient(0deg, rgba(255,255,255,.18), rgba(255,255,255,.18)),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.18), rgba(255,255,255,.18) 1px, transparent 1px, transparent 56px),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.18), rgba(255,255,255,.18) 1px, transparent 1px, transparent 56px);
   border: 1px solid rgba(255,255,255,.22);
   overflow:hidden;
   box-shadow: 0 18px 40px rgba(0,0,0,.12);
@@ -426,9 +435,7 @@ img{ max-width:100%; height:auto; }
 }
 .char:hover{ transform: translateY(-1px); }
 
-/* ✅ nombre en blanco dentro del juego */
 .char .name{ font-weight:900; color:#fff; }
-
 .char.selected{
   border-color: rgba(85,214,255,.7);
   background: rgba(85,214,255,.10);
@@ -436,12 +443,33 @@ img{ max-width:100%; height:auto; }
 }
 .char.locked{ opacity:.45; cursor:not-allowed; transform:none !important; }
 
+/* ✅ Botones: mostaza */
+.btn{
+  appearance:none;
+  border:none;
+  cursor:pointer;
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-weight:900;
+  color:#1c1606;
+  background: linear-gradient(180deg, var(--mustard), var(--mustard2));
+  box-shadow: 0 12px 26px rgba(0,0,0,.14);
+}
+.btn:disabled{ opacity:.6; cursor:not-allowed; }
+
+.btn-ghost{
+  color: #fff;
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: none;
+}
+
 .pill{
   font-size:12px;
   padding: 6px 10px;
   border-radius: 999px;
   border: 1px solid rgba(255,255,255,.14);
-  color: rgba(255,255,255,.78);
+  color: rgba(255,255,255,.85);
   white-space:nowrap;
 }
 
@@ -449,26 +477,6 @@ img{ max-width:100%; height:auto; }
 
 .modal-actions{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
 .modal-actions.end{ justify-content:flex-end; }
-
-.btn{
-  appearance:none;
-  border:none;
-  cursor:pointer;
-  border-radius: 14px;
-  padding: 10px 14px;
-  font-weight:800;
-  color:#06101f;
-  background: linear-gradient(180deg, #7ef0ff, #3ad0ff);
-  box-shadow: 0 12px 26px rgba(58,208,255,.25);
-}
-.btn:disabled{ opacity:.6; cursor:not-allowed; }
-
-.btn-ghost{
-  color: #fff;
-  background: rgba(255,255,255,.08);
-  border: 1px solid rgba(255,255,255,.14);
-  box-shadow: none;
-}
 
 /* ---------- ROULETTE ---------- */
 .roulette-card{ width:min(620px, 100%); }
@@ -519,7 +527,6 @@ img{ max-width:100%; height:auto; }
 }
 .deck-card:hover{ transform: translateY(-1px); }
 
-/* ✅ mejor para miniaturas: contain */
 .deck-card img{
   width: 100%;
   height: 110px;
@@ -536,7 +543,7 @@ img{ max-width:100%; height:auto; }
   align-items:center;
   justify-content:space-between;
   gap: 8px;
-  color:#fff; /* ✅ nombre blanco */
+  color:#fff;
 }
 
 .deck-card .pill{
@@ -565,7 +572,6 @@ img{ max-width:100%; height:auto; }
   gap: 10px;
 }
 
-/* ✅ SOLO en selección de equipo permitimos scroll (interno) */
 #teamScreen .start-card{
   max-height: calc(var(--appH) - 36px);
   max-height: calc(100dvh - 36px);
@@ -591,10 +597,10 @@ img{ max-width:100%; height:auto; }
   box-shadow: 0 10px 26px rgba(0,0,0,.18);
   padding: 0;
   text-align:left;
+  position: relative; /* ✅ para overlay de etiquetas */
 }
 .team-card:hover{ transform: translateY(-1px); }
 
-/* ✅ imágenes más legibles en pequeño */
 .team-card img{
   width: 100%;
   height: 110px;
@@ -603,7 +609,7 @@ img{ max-width:100%; height:auto; }
   display:block;
 }
 
-/* ✅ nombre + etiquetas (sin cortes) */
+/* ✅ zona inferior con nombre + botón */
 .team-card .team-card-name{
   padding: 7px 9px 10px;
   font-weight: 900;
@@ -611,7 +617,7 @@ img{ max-width:100%; height:auto; }
   display:flex;
   flex-direction:column;
   gap: 8px;
-  color:#fff; /* ✅ nombre blanco */
+  color:#fff;
 }
 
 .team-card .team-card-row{
@@ -621,28 +627,40 @@ img{ max-width:100%; height:auto; }
   gap: 8px;
 }
 
+/* ✅ etiquetas visibles y SIN recorte (permitimos overlay sobre imagen) */
 .team-card .team-tags{
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  right: 8px;
   display:flex;
   gap: 6px;
-  flex-wrap:wrap;          /* ✅ wrap real */
+  flex-wrap:wrap;
   align-items:flex-start;
+  z-index: 2;
+
+  /* ✅ superposición sobre imagen */
+  pointer-events: none;
 }
 
 .team-card .tag-pill{
-  font-size: 10px;          /* ✅ un poco más pequeño */
+  font-size: 10px;
   padding: 4px 8px;
   border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.16);
+  border: 1px solid rgba(255,255,255,.18);
   color: #fff;
-  background: rgba(255,255,255,.08);
-  white-space: normal;      /* ✅ permite romper si hiciera falta */
+  background: rgba(0,0,0,.28);
   line-height: 1.15;
+
+  /* ✅ no recortar texto */
+  white-space: normal;
+  max-width: 100%;
 }
 
 .team-card.selected{
-  border-color: rgba(58,208,255,.85);
-  background: rgba(85,214,255,.10);
-  box-shadow: 0 10px 26px rgba(58,208,255,.12);
+  border-color: rgba(255,255,255,.70);
+  background: rgba(255,255,255,.10);
+  box-shadow: 0 10px 26px rgba(0,0,0,.10);
 }
 
 /* ---------- ANIMATIONS ---------- */
