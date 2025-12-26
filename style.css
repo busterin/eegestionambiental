@@ -15,6 +15,7 @@
   --appH: 100vh;
 }
 
+/* ✅ No scroll en toda la app (reforzado) */
 html,body{
   height:100%;
   margin:0;
@@ -23,13 +24,12 @@ html,body{
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
+/* ✅ Fondo azul claro para TODO el juego */
 body{
   position: fixed;
   inset: 0;
   width: 100%;
-  background:
-    radial-gradient(1200px 700px at 20% 10%, #152a5c, var(--bg)),
-    linear-gradient(0deg, rgba(201,163,50,.55), rgba(201,163,50,.55));
+  background: #7ecbff;
   color:var(--text);
 }
 
@@ -53,7 +53,7 @@ img{ max-width:100%; height:auto; }
   display:flex;
   align-items:center;
   justify-content:center;
-  padding: 18px;
+  padding: 24px 18px;
 }
 
 .intro-content{
@@ -62,7 +62,7 @@ img{ max-width:100%; height:auto; }
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap: 14px;
+  gap: 26px;             /* ✅ más separación general */
   text-align:center;
 }
 
@@ -80,27 +80,26 @@ img{ max-width:100%; height:auto; }
     system-ui,
     sans-serif;
 
-  /* ✅ ahora en blanco */
-  color: #ffffff;
+  color: #ffffff;        /* ✅ blanco */
   text-shadow:
-    0 8px 0 rgba(0,0,0,.25),
-    0 18px 38px rgba(0,0,0,.45);
+    0 8px 0 rgba(0,0,0,.22),
+    0 18px 38px rgba(0,0,0,.30);
 }
 
+/* ✅ más separación título/logo */
 .intro-logo{
   width: min(760px, 100%);
-  max-height: 46vh;
+  max-height: 42vh;
   object-fit: contain;
   user-select:none;
   pointer-events:none;
-  filter: drop-shadow(0 18px 30px rgba(0,0,0,.55));
+  filter: drop-shadow(0 18px 26px rgba(0,0,0,.28));
+  margin-top: 2px;
 }
 
-.intro-btn{
-  width: min(280px, 100%);
-}
-
+/* ✅ más separación logo/botones */
 .intro-actions{
+  margin-top: 6px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -108,6 +107,11 @@ img{ max-width:100%; height:auto; }
   flex-wrap: wrap;
   width: min(520px, 100%);
 }
+
+.intro-btn{
+  width: min(280px, 100%);
+}
+
 .intro-info-btn{
   width: 46px;
   height: 46px;
@@ -136,8 +140,8 @@ img{ max-width:100%; height:auto; }
   text-align:center;
 }
 
-.start-title{ font-weight: 1000; font-size: 22px; }
-.start-subtitle{ margin-top: 6px; color: var(--muted); font-size: 13px; }
+.start-title{ font-weight: 1000; font-size: 22px; color: #fff; }
+.start-subtitle{ margin-top: 6px; color: rgba(255,255,255,.78); font-size: 13px; }
 .start-btn{ margin-top: 12px; width: min(260px, 100%); }
 
 /* Carrusel */
@@ -155,7 +159,7 @@ img{ max-width:100%; height:auto; }
   border-radius: 16px;
   border: 1px solid rgba(255,255,255,.12);
   background: rgba(255,255,255,.06);
-  color: var(--text);
+  color: #fff;
   font-size: 34px;
   line-height: 1;
   cursor:pointer;
@@ -180,7 +184,6 @@ img{ max-width:100%; height:auto; }
   overflow:hidden;
 }
 
-/* ✅ mantiene proporción/tamaño consistente en selector */
 .carousel-img{
   height: 190px;
   width: auto;
@@ -188,7 +191,7 @@ img{ max-width:100%; height:auto; }
   object-fit: contain;
   display:block;
   margin: 0 auto;
-  filter: drop-shadow(0 14px 22px rgba(0,0,0,.35));
+  filter: drop-shadow(0 14px 22px rgba(0,0,0,.25));
   user-select:none;
   pointer-events:none;
 }
@@ -226,8 +229,8 @@ img{ max-width:100%; height:auto; }
   align-items:center;
   justify-content:space-between;
   padding:14px 14px 10px;
-  background: rgba(201,163,50,.25);
-  border-bottom: 1px solid rgba(255,255,255,.08);
+  background: rgba(0,0,0,.08);
+  border-bottom: 1px solid rgba(255,255,255,.12);
   backdrop-filter: blur(8px);
 }
 
@@ -238,34 +241,35 @@ img{ max-width:100%; height:auto; }
   box-shadow: 0 0 18px rgba(255,59,59,.7);
   animation: blink 1.2s infinite;
 }
-.title{ font-weight:800; letter-spacing:.2px; }
-.subtitle{ font-size:12px; color:var(--muted); margin-top:2px; }
+.title{ font-weight:800; letter-spacing:.2px; color:#fff; }
+.subtitle{ font-size:12px; color:rgba(255,255,255,.78); margin-top:2px; }
 
 .hud{ display:flex; gap:10px; align-items:center; }
 
 .hud-card{
-  background: rgba(201,163,50,.22);
-  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(0,0,0,.08);
+  border: 1px solid rgba(255,255,255,.14);
   border-radius:14px;
   padding:10px 12px;
   min-width: 110px;
-  box-shadow: 0 8px 20px rgba(0,0,0,.20);
+  box-shadow: 0 8px 20px rgba(0,0,0,.10);
   backdrop-filter: blur(8px);
 }
-.hud-label{ font-size:11px; color:rgba(233,238,252,.85); }
-.hud-value{ font-size:18px; font-weight:800; margin-top:3px; }
+.hud-label{ font-size:11px; color:rgba(255,255,255,.80); }
+.hud-value{ font-size:18px; font-weight:800; margin-top:3px; color:#fff; }
 
 .hud-icon-btn{
   width: 44px;
   height: 44px;
   border-radius: 14px;
-  background: rgba(201,163,50,.22);
-  border: 1px solid rgba(255,255,255,.10);
-  box-shadow: 0 8px 20px rgba(0,0,0,.20);
+  background: rgba(0,0,0,.08);
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow: 0 8px 20px rgba(0,0,0,.10);
   cursor:pointer;
   display:grid;
   place-items:center;
   backdrop-filter: blur(8px);
+  color:#fff;
 }
 .hud-icon-btn:active{ transform: translateY(1px); }
 .deck-icon{ font-size:20px; }
@@ -283,14 +287,10 @@ img{ max-width:100%; height:auto; }
   min-height: 0;
   position:relative;
   border-radius: var(--radius);
-  background:
-    radial-gradient(800px 500px at 70% 30%, rgba(85,214,255,.10), transparent 55%),
-    linear-gradient(0deg, rgba(255,255,255,.06), rgba(255,255,255,.06)),
-    repeating-linear-gradient(90deg, rgba(255,255,255,.05), rgba(255,255,255,.05) 1px, transparent 1px, transparent 56px),
-    repeating-linear-gradient(0deg, rgba(255,255,255,.05), rgba(255,255,255,.05) 1px, transparent 1px, transparent 56px);
-  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.22);
   overflow:hidden;
-  box-shadow: var(--shadow);
+  box-shadow: 0 18px 40px rgba(0,0,0,.12);
 }
 
 .buster-img{
@@ -302,12 +302,12 @@ img{ max-width:100%; height:auto; }
   cursor:pointer;
   pointer-events:auto;
   user-select:none;
-  filter: drop-shadow(0 14px 22px rgba(0,0,0,.45));
+  filter: drop-shadow(0 14px 22px rgba(0,0,0,.25));
   transition: transform .12s ease, filter .12s ease;
 }
 .buster-img:hover{
   transform: translateY(-2px) scale(1.02);
-  filter: drop-shadow(0 18px 26px rgba(0,0,0,.55));
+  filter: drop-shadow(0 18px 26px rgba(0,0,0,.32));
 }
 
 .buster-img.special-armed{
@@ -315,7 +315,7 @@ img{ max-width:100%; height:auto; }
   filter:
     drop-shadow(0 0 14px rgba(85,214,255,.65))
     drop-shadow(0 0 26px rgba(85,214,255,.35))
-    drop-shadow(0 14px 22px rgba(0,0,0,.45));
+    drop-shadow(0 14px 22px rgba(0,0,0,.25));
 }
 @keyframes specialGlow{
   0%{ transform: translateY(0) scale(1); }
@@ -389,13 +389,13 @@ img{ max-width:100%; height:auto; }
 }
 
 .modal-head{ display:flex; gap: 12px; align-items:flex-start; justify-content:space-between; }
-.modal-title{ font-weight:900; font-size:18px; }
-.modal-text{ margin-top:6px; color: var(--muted); font-size:13px; line-height:1.35; }
+.modal-title{ font-weight:900; font-size:18px; color:#fff; }
+.modal-text{ margin-top:6px; color: rgba(255,255,255,.78); font-size:13px; line-height:1.35; }
 
 .icon-btn{
   border:none;
   background: rgba(255,255,255,.08);
-  color: var(--text);
+  color: #fff;
   border-radius: 12px;
   width: 38px;
   height: 38px;
@@ -404,7 +404,7 @@ img{ max-width:100%; height:auto; }
 }
 
 .divider{ height:1px; background: rgba(255,255,255,.10); margin: 12px 0; }
-.section-title{ font-weight:800; margin-bottom:10px; }
+.section-title{ font-weight:800; margin-bottom:10px; color:#fff; }
 
 .grid{
   display:grid;
@@ -425,7 +425,10 @@ img{ max-width:100%; height:auto; }
   gap:10px;
 }
 .char:hover{ transform: translateY(-1px); }
-.char .name{ font-weight:900; }
+
+/* ✅ nombre en blanco dentro del juego */
+.char .name{ font-weight:900; color:#fff; }
+
 .char.selected{
   border-color: rgba(85,214,255,.7);
   background: rgba(85,214,255,.10);
@@ -438,11 +441,11 @@ img{ max-width:100%; height:auto; }
   padding: 6px 10px;
   border-radius: 999px;
   border: 1px solid rgba(255,255,255,.14);
-  color: var(--muted);
+  color: rgba(255,255,255,.78);
   white-space:nowrap;
 }
 
-.hint{ margin-top:10px; font-size:12px; color: var(--muted); }
+.hint{ margin-top:10px; font-size:12px; color: rgba(255,255,255,.78); }
 
 .modal-actions{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
 .modal-actions.end{ justify-content:flex-end; }
@@ -461,7 +464,7 @@ img{ max-width:100%; height:auto; }
 .btn:disabled{ opacity:.6; cursor:not-allowed; }
 
 .btn-ghost{
-  color: var(--text);
+  color: #fff;
   background: rgba(255,255,255,.08);
   border: 1px solid rgba(255,255,255,.14);
   box-shadow: none;
@@ -478,23 +481,23 @@ img{ max-width:100%; height:auto; }
   left:50%;
   transform: translateX(-50%);
   font-size:18px;
-  color: var(--text);
-  text-shadow: 0 10px 18px rgba(0,0,0,.5);
+  color: #fff;
+  text-shadow: 0 10px 18px rgba(0,0,0,.35);
 }
 .roulette-wheel{
   width: 220px; height: 220px;
   border-radius:50%;
   border: 1px solid rgba(255,255,255,.12);
   background: conic-gradient(from 0deg, rgba(46,229,157,.85) 0 40%, rgba(255,59,59,.85) 40% 100%);
-  box-shadow: 0 18px 50px rgba(0,0,0,.35);
+  box-shadow: 0 18px 50px rgba(0,0,0,.25);
   transform: rotate(0deg);
 }
-.roulette-outcome{ min-height: 22px; font-weight:900; letter-spacing:.2px; }
+.roulette-outcome{ min-height: 22px; font-weight:900; letter-spacing:.2px; color:#fff; }
 
 /* ---------- FINAL ---------- */
 .final-score{ display:flex; align-items:baseline; justify-content:space-between; padding: 10px 4px; }
-.final-label{ color: var(--muted); font-weight:700; }
-.final-value{ font-size:42px; font-weight:1000; }
+.final-label{ color: rgba(255,255,255,.78); font-weight:700; }
+.final-value{ font-size:42px; font-weight:1000; color:#fff; }
 
 /* ---------- DECK ---------- */
 .deck-grid{
@@ -516,10 +519,12 @@ img{ max-width:100%; height:auto; }
 }
 .deck-card:hover{ transform: translateY(-1px); }
 
+/* ✅ mejor para miniaturas: contain */
 .deck-card img{
   width: 100%;
-  height: 95px;
-  object-fit: cover;
+  height: 110px;
+  object-fit: contain;
+  background: rgba(255,255,255,.04);
   display:block;
 }
 
@@ -531,6 +536,7 @@ img{ max-width:100%; height:auto; }
   align-items:center;
   justify-content:space-between;
   gap: 8px;
+  color:#fff; /* ✅ nombre blanco */
 }
 
 .deck-card .pill{
@@ -549,6 +555,7 @@ img{ max-width:100%; height:auto; }
 .team-counter{
   font-weight: 900;
   letter-spacing: .2px;
+  color:#fff;
 }
 
 .team-grid{
@@ -587,41 +594,49 @@ img{ max-width:100%; height:auto; }
 }
 .team-card:hover{ transform: translateY(-1px); }
 
+/* ✅ imágenes más legibles en pequeño */
 .team-card img{
   width: 100%;
-  height: 95px;
-  object-fit: cover;
+  height: 110px;
+  object-fit: contain;
+  background: rgba(255,255,255,.04);
   display:block;
 }
 
-/* ✅ nombre + etiquetas */
+/* ✅ nombre + etiquetas (sin cortes) */
 .team-card .team-card-name{
   padding: 7px 9px 10px;
   font-weight: 900;
   font-size: 12px;
   display:flex;
   flex-direction:column;
-  gap: 6px;
+  gap: 8px;
+  color:#fff; /* ✅ nombre blanco */
 }
+
 .team-card .team-card-row{
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap: 8px;
 }
+
 .team-card .team-tags{
   display:flex;
   gap: 6px;
-  flex-wrap:wrap;
+  flex-wrap:wrap;          /* ✅ wrap real */
+  align-items:flex-start;
 }
+
 .team-card .tag-pill{
-  font-size: 11px;
+  font-size: 10px;          /* ✅ un poco más pequeño */
   padding: 4px 8px;
   border-radius: 999px;
-  border: 1px solid rgba(255,255,255,.14);
-  color: rgba(233,238,252,.88);
-  background: rgba(255,255,255,.06);
-  white-space: nowrap;
+  border: 1px solid rgba(255,255,255,.16);
+  color: #fff;
+  background: rgba(255,255,255,.08);
+  white-space: normal;      /* ✅ permite romper si hiciera falta */
+  line-height: 1.15;
 }
 
 .team-card.selected{
@@ -656,8 +671,9 @@ img{ max-width:100%; height:auto; }
   .topbar{ flex-direction:column; align-items:stretch; }
   .hud{ justify-content:space-between; }
 
-  .intro-logo{ max-height: 38vh; }
+  .intro-logo{ max-height: 36vh; }
   .intro-title{ font-size: clamp(34px, 8.8vw, 64px); }
+  .intro-content{ gap: 22px; }
 
   .grid{ grid-template-columns: 1fr; }
   .buster-img{ width: 100px; }
@@ -665,11 +681,7 @@ img{ max-width:100%; height:auto; }
   .carousel{ grid-template-columns: 48px 1fr 48px; }
   .carousel-btn{ width:48px; height:48px; border-radius: 14px; font-size: 30px; }
 
-  .carousel-img{
-    height: 170px;
-    width: auto;
-  }
-
+  .carousel-img{ height: 170px; width: auto; }
   .carousel-center{ min-height: 240px; }
 
   .stage{ padding-bottom: 10px; }
