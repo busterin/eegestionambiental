@@ -19,65 +19,79 @@ document.addEventListener("DOMContentLoaded", () => {
   const MAX_ACTIVE_POINTS = 10;
 
   // -------------------------
-  // ✅ MISIONES (15 total)
+  // ✅ ETIQUETAS NUEVAS
+  // -------------------------
+  const TAGS = [
+    "Sostenibilidad",
+    "Transporte sostenible",
+    "Eficiencia energética",
+    "Energías renovables",
+    "Cambio climático",
+    "Reciclaje"
+  ];
+
+  // -------------------------
+  // ✅ 30 MISIONES NUEVAS (con etiqueta)
   // -------------------------
   const MISSIONS = [
-    // EDUCACIÓN (3)
-    { id: "m1", title: "Taller Exprés", internalTag: "Educación", text: "Hay un grupo listo para empezar y falta ajustar la dinámica. Envía a alguien que domine actividades educativas y manejo de tiempos." },
-    { id: "m2", title: "Guía de Actividad", internalTag: "Educación", text: "Necesitamos una mini-guía clara para que cualquiera pueda dirigir la sesión. Envía a quien sepa convertir ideas en instrucciones sencillas." },
-    { id: "m3", title: "Plan de Aula", internalTag: "Educación", text: "Han cambiado el perfil del público a última hora. Envía a alguien que sepa adaptar contenidos y mantener a la gente enganchada." },
+    // Sostenibilidad (5)
+    { id: "m1",  title: "Plan de consumo responsable", internalTag: "Sostenibilidad", text: "Define una pauta rápida para reducir consumos innecesarios en el equipo sin frenar la actividad." },
+    { id: "m2",  title: "Checklist de compras verdes", internalTag: "Sostenibilidad", text: "Crea un criterio de compra sostenible para materiales y proveedores en 10 minutos." },
+    { id: "m3",  title: "Mapa de impactos", internalTag: "Sostenibilidad", text: "Identifica los 3 impactos ambientales principales del día y prioriza acciones." },
+    { id: "m4",  title: "Revisión de hábitos", internalTag: "Sostenibilidad", text: "Detecta un hábito poco sostenible y propón una alternativa viable para el equipo." },
+    { id: "m5",  title: "Objetivo semanal verde", internalTag: "Sostenibilidad", text: "Define un objetivo ambiental simple y medible para la semana." },
 
-    // PICOFINO (3)
-    { id: "m4", title: "Incidencia de Operativa", internalTag: "Picofino", text: "Se ha bloqueado una tarea del día a día y hay que desbloquearla sin montar lío. Envía a quien conozca bien cómo se mueve Picofino." },
-    { id: "m5", title: "Pedido Descuadrado", internalTag: "Picofino", text: "Un pedido no cuadra con lo esperado y el equipo necesita una mano para reordenar prioridades y resolverlo rápido." },
-    { id: "m6", title: "Turno Improvisado", internalTag: "Picofino", text: "Falta gente en un turno clave. Envía a quien sepa reorganizar recursos y apagar fuegos sin que se note." },
+    // Transporte sostenible (5)
+    { id: "m6",  title: "Ruta eficiente", internalTag: "Transporte sostenible", text: "Optimiza una ruta para reducir desplazamientos y tiempo total." },
+    { id: "m7",  title: "Plan de movilidad compartida", internalTag: "Transporte sostenible", text: "Organiza un sistema de coche compartido para dos trayectos recurrentes." },
+    { id: "m8",  title: "Cambio modal", internalTag: "Transporte sostenible", text: "Propón cómo sustituir un trayecto en coche por alternativa más sostenible sin perder operativa." },
+    { id: "m9",  title: "Punto de encuentro", internalTag: "Transporte sostenible", text: "Define un punto logístico para agrupar recogidas y reducir viajes duplicados." },
+    { id: "m10", title: "Comunicación de movilidad", internalTag: "Transporte sostenible", text: "Redacta un mensaje breve para impulsar movilidad sostenible sin que suene obligatorio." },
 
-    // PRODUCCIÓN (3)
-    { id: "m7", title: "Montaje a Contrarreloj", internalTag: "Producción", text: "Hay que montar algo rápido y bien, cuidando detalles y materiales. Envía a quien sepa de logística, montaje y ejecución." },
-    { id: "m8", title: "Materiales Perdidos", internalTag: "Producción", text: "Falta material y nadie sabe dónde está. Envía a quien tenga control de inventario y sepa coordinar búsquedas sin caos." },
-    { id: "m9", title: "Plan B de Producción", internalTag: "Producción", text: "El plan inicial se ha caído. Necesitamos a alguien que replantee el paso a paso y saque la tarea adelante con recursos limitados." },
+    // Eficiencia energética (5)
+    { id: "m11", title: "Luces y equipos", internalTag: "Eficiencia energética", text: "Revisa 3 focos de consumo y define acciones inmediatas (apagados, horarios, automatización)." },
+    { id: "m12", title: "Modo ahorro", internalTag: "Eficiencia energética", text: "Configura un protocolo rápido de ahorro energético para el cierre del día." },
+    { id: "m13", title: "Optimizar climatización", internalTag: "Eficiencia energética", text: "Ajusta el uso de climatización para reducir consumo manteniendo confort básico." },
+    { id: "m14", title: "Stand-by cero", internalTag: "Eficiencia energética", text: "Elimina consumos en stand-by en un área y deja un recordatorio visible." },
+    { id: "m15", title: "Medición express", internalTag: "Eficiencia energética", text: "Define una métrica sencilla para controlar consumo energético semanal." },
 
-    // MUSEOS (1)
-    { id: "m10", title: "Ajuste de Sala", internalTag: "Museos", text: "La sala necesita un cambio fino: recorrido, cartelas y flujo de personas. Envía a quien sepa de exposición y criterios de museo." },
+    // Energías renovables (5)
+    { id: "m16", title: "Plan solar básico", internalTag: "Energías renovables", text: "Propón un esquema de aprovechamiento solar (aunque sea conceptual) para un espacio." },
+    { id: "m17", title: "Divulgación renovable", internalTag: "Energías renovables", text: "Crea una mini explicación clara para que cualquiera entienda por qué apostar por renovables." },
+    { id: "m18", title: "Priorizar fuentes limpias", internalTag: "Energías renovables", text: "Decide qué fuentes renovables encajan mejor según uso y contexto del equipo." },
+    { id: "m19", title: "Contrato verde", internalTag: "Energías renovables", text: "Prepara un checklist para validar si un suministro es realmente renovable." },
+    { id: "m20", title: "Energía para eventos", internalTag: "Energías renovables", text: "Diseña un plan para reducir uso de generadores y favorecer energía limpia en un evento." },
 
-    // PROGRAMACIÓN (5)
-    { id: "m11", title: "Bug Fantasma", internalTag: "Programación", text: "Algo falla solo a veces y nadie logra reproducirlo. Envía a quien sepa investigar errores raros y aislar la causa." },
-    { id: "m12", title: "Integración Rápida", internalTag: "Programación", text: "Hay que conectar dos piezas que no se hablan bien. Envía a quien se maneje con integraciones y soluciones limpias." },
-    { id: "m13", title: "Optimizar Carga", internalTag: "Programación", text: "En móviles tarda demasiado en cargar. Envía a quien sepa mejorar rendimiento sin romper nada." },
-    { id: "m14", title: "Botón Rebelde", internalTag: "Programación", text: "Un botón deja de responder en ciertos casos. Envía a quien tenga mano con eventos, estados y depuración." },
-    { id: "m15", title: "Refactor Discreto", internalTag: "Programación", text: "Hay código que funciona pero es un lío. Envía a quien sepa ordenar y dejarlo mantenible sin cambiar el comportamiento." }
+    // Cambio climático (5)
+    { id: "m21", title: "Riesgo climático", internalTag: "Cambio climático", text: "Detecta un riesgo climático (calor, lluvia, etc.) y propone un plan de adaptación rápido." },
+    { id: "m22", title: "Mensaje de concienciación", internalTag: "Cambio climático", text: "Redacta un mensaje breve que conecte acciones pequeñas con impacto real." },
+    { id: "m23", title: "Plan de resiliencia", internalTag: "Cambio climático", text: "Crea 3 medidas para mejorar resiliencia del equipo ante eventos extremos." },
+    { id: "m24", title: "Huella rápida", internalTag: "Cambio climático", text: "Identifica 2 actividades que más emiten y una mejora inmediata para cada una." },
+    { id: "m25", title: "Compromiso público", internalTag: "Cambio climático", text: "Propón un compromiso simple y comunicable para reducir impacto climático." },
+
+    // Reciclaje (5)
+    { id: "m26", title: "Puntos de reciclaje", internalTag: "Reciclaje", text: "Reorganiza puntos de reciclaje para que sean obvios y accesibles en un espacio." },
+    { id: "m27", title: "Separación correcta", internalTag: "Reciclaje", text: "Crea una guía visual rápida para evitar errores típicos al separar residuos." },
+    { id: "m28", title: "Reducir residuos", internalTag: "Reciclaje", text: "Elige un residuo recurrente y propone sustitución o reducción inmediata." },
+    { id: "m29", title: "Reciclaje en evento", internalTag: "Reciclaje", text: "Diseña un mini sistema de recogida y separación de residuos para un evento." },
+    { id: "m30", title: "Reutilización creativa", internalTag: "Reciclaje", text: "Propón una forma de reutilizar un material común antes de desecharlo." }
   ];
 
   // -------------------------
-  // ✅ PERSONAJES (múltiples etiquetas)
+  // ✅ 10 PERSONAJES (2 tags cada uno) + imágenes
+  // (Asignación “al azar” pero fija/determinística para no cambiar en cada recarga)
   // -------------------------
-  const CHARACTERS = [
-    { id: "c1",  name: "Castri",  tags: ["Producción", "Museos"] },
-    { id: "c2",  name: "Maider",  tags: ["Museos", "Producción"] },
-    { id: "c3",  name: "Celia",   tags: ["Picofino"] },
-    { id: "c4",  name: "Buster",  tags: ["Educación"] },
-    { id: "c5",  name: "Dre",     tags: ["Programación"] },
-
-    { id: "c6",  name: "Genio",   tags: ["Producción"] },
-    { id: "c7",  name: "Lorena",  tags: ["Diseño"] },
-    { id: "c8",  name: "Alba",    tags: ["Producción"] },
-    { id: "c9",  name: "María M", tags: ["Producción"] },
-    { id: "c10", name: "Voby",    tags: ["Producción"] }
-  ];
-
-  // ✅ Cartas (todas) - OJO: Dre ahora es dre.JPEG
-  const CARDS = [
-    { id: "card_buster", name: "Buster",  img: "images/buster.JPEG",  text: "Carta de apoyo: aporta claridad y estructura." },
-    { id: "card_castri", name: "Castri",  img: "images/castri.JPEG",  text: "Carta de apoyo: coordinación y ejecución con criterio." },
-    { id: "card_maider", name: "Maider",  img: "images/maider.JPEG",  text: "Carta de apoyo: mirada de sala y ajuste fino." },
-    { id: "card_celia",  name: "Celia",   img: "images/celia.JPEG",   text: "Carta de apoyo: resuelve operativa con rapidez." },
-    { id: "card_dre",    name: "Dre",     img: "images/dre.JPEG",     text: "Carta de apoyo: detecta fallos y los arregla." },
-
-    { id: "card_genio",  name: "Genio",   img: "images/genio.JPEG",   text: "Carta de apoyo: saca tareas adelante con recursos limitados." },
-    { id: "card_lorena", name: "Lorena",  img: "images/lorena.JPEG",  text: "Carta de apoyo: mejora presentación, orden y estética." },
-    { id: "card_alba",   name: "Alba",    img: "images/alba.JPEG",    text: "Carta de apoyo: ejecución rápida y organizada." },
-    { id: "card_mariam", name: "María M", img: "images/mariam.JPEG",  text: "Carta de apoyo: coordina y aterriza lo pendiente." },
-    { id: "card_voby",   name: "Voby",    img: "images/voby.JPEG",    text: "Carta de apoyo: empuja producción y logística." }
+  const TEAM_MEMBERS = [
+    { id: "p1",  name: "Personaje 1",  img: "images/personaje1.png",  tags: ["Sostenibilidad", "Reciclaje"] },
+    { id: "p2",  name: "Personaje 2",  img: "images/personaje2.png",  tags: ["Transporte sostenible", "Cambio climático"] },
+    { id: "p3",  name: "Personaje 3",  img: "images/personaje3.png",  tags: ["Eficiencia energética", "Energías renovables"] },
+    { id: "p4",  name: "Personaje 4",  img: "images/personaje4.png",  tags: ["Sostenibilidad", "Eficiencia energética"] },
+    { id: "p5",  name: "Personaje 5",  img: "images/personaje5.png",  tags: ["Reciclaje", "Cambio climático"] },
+    { id: "p6",  name: "Personaje 6",  img: "images/personaje6.png",  tags: ["Transporte sostenible", "Eficiencia energética"] },
+    { id: "p7",  name: "Personaje 7",  img: "images/personaje7.png",  tags: ["Energías renovables", "Sostenibilidad"] },
+    { id: "p8",  name: "Personaje 8",  img: "images/personaje8.png",  tags: ["Cambio climático", "Energías renovables"] },
+    { id: "p9",  name: "Personaje 9",  img: "images/personaje9.png",  tags: ["Reciclaje", "Transporte sostenible"] },
+    { id: "p10", name: "Personaje 10", img: "images/personaje10.png", tags: ["Eficiencia energética", "Sostenibilidad"] }
   ];
 
   // -------------------------
@@ -86,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const MISSION_LIFETIME_MS = 2 * 60 * 1000;  // rojo antes de perderse
   const EXECUTION_TIME_MS   = 60 * 1000;      // ✅ 1 minuto en amarillo
 
+  // ✅ regla: match suma 80%, no match suma 10%
   const MATCH_ADD = 0.8;
   const NO_MATCH_ADD = 0.1;
 
@@ -110,7 +125,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const prevAvatarBtn = document.getElementById("prevAvatarBtn");
   const nextAvatarBtn = document.getElementById("nextAvatarBtn");
   const avatarPreviewImg = document.getElementById("avatarPreviewImg");
-  const avatarPreviewName = document.getElementById("avatarPreviewName");
   const dot0 = document.getElementById("dot0");
   const dot1 = document.getElementById("dot1");
 
@@ -174,17 +188,15 @@ document.addEventListener("DOMContentLoaded", () => {
   let noSpawnRect = null;
 
   // ✅ Equipo (6)
-  let selectedTeamCardIds = new Set();
+  let selectedTeamIds = new Set();
   let availableCharacters = [];
   let availableCards = [];
 
-  // Avatares (mapa)
+  // ✅ Avatares (solo 2) sin nombre
   const AVATARS = [
-    { key: "buster", name: "Buster", src: "images/buster1.PNG", alt: "Buster" },
-    { key: "castri", name: "Castri", src: "images/castri1.PNG", alt: "Castri" },
-    { key: "celia",  name: "Celia",  src: "images/celia1.PNG",  alt: "Celia" },
-    { key: "maider", name: "Maider", src: "images/maider1.png", alt: "Maider" }
-  ].sort((a, b) => a.name.localeCompare(b.name, "es", { sensitivity: "base" }));
+    { key: "a1", src: "images/avatar1.png", alt: "Avatar 1" },
+    { key: "a2", src: "images/avatar2.png", alt: "Avatar 2" }
+  ];
 
   let avatarIndex = 0;
   let specialUsed = false;
@@ -226,12 +238,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function normalizeTag(tag){
     const t = String(tag || "").trim().toLowerCase();
-    if (t === "museos" || t === "museo") return "Museos";
-    if (t === "educación" || t === "educacion") return "Educación";
-    if (t === "producción" || t === "produccion") return "Producción";
-    if (t === "picofino") return "Picofino";
-    if (t === "programación" || t === "programacion") return "Programación";
-    if (t === "diseño" || t === "diseno") return "Diseño";
+
+    // normalización sencilla para evitar acentos / variantes
+    if (t.includes("sosten")) return "Sostenibilidad";
+    if (t.includes("transporte")) return "Transporte sostenible";
+    if (t.includes("eficien")) return "Eficiencia energética";
+    if (t.includes("renovable")) return "Energías renovables";
+    if (t.includes("clim")) return "Cambio climático";
+    if (t.includes("recicl")) return "Reciclaje";
+
+    // fallback
     return tag;
   }
 
@@ -288,15 +304,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // -------------------------
-  // Avatar carousel
+  // Avatar carousel (solo imagen)
   // -------------------------
   function animateCarousel(direction){
     const dx = direction > 0 ? 24 : -24;
     avatarPreviewImg.animate(
-      [{ transform: `translateX(${dx}px)`, opacity: 0 }, { transform: "translateX(0px)", opacity: 1 }],
-      { duration: 220, easing: "cubic-bezier(.2,.8,.2,1)" }
-    );
-    avatarPreviewName.animate(
       [{ transform: `translateX(${dx}px)`, opacity: 0 }, { transform: "translateX(0px)", opacity: 1 }],
       { duration: 220, easing: "cubic-bezier(.2,.8,.2,1)" }
     );
@@ -306,9 +318,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const a = AVATARS[avatarIndex];
     avatarPreviewImg.src = a.src;
     avatarPreviewImg.alt = a.alt;
-    avatarPreviewName.textContent = a.name;
+
     dot0?.classList.toggle("active", avatarIndex === 0);
     dot1?.classList.toggle("active", avatarIndex === 1);
+
     if (direction !== 0) animateCarousel(direction);
   }
 
@@ -322,10 +335,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // -------------------------
-  // Equipo (6)
+  // Equipo (6 de 10) - mostrar etiquetas
   // -------------------------
   function updateTeamUI(){
-    const n = selectedTeamCardIds.size;
+    const n = selectedTeamIds.size;
     teamCountEl.textContent = String(n);
     teamConfirmBtn.disabled = n !== 6;
 
@@ -336,27 +349,34 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderTeamSelection(){
     teamGrid.innerHTML = "";
 
-    const cardsSorted = [...CARDS].sort((a,b)=>a.name.localeCompare(b.name,"es",{sensitivity:"base"}));
-
-    cardsSorted.forEach(cardData=>{
+    TEAM_MEMBERS.forEach(p=>{
+      const isSelected = selectedTeamIds.has(p.id);
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "team-card" + (selectedTeamCardIds.has(cardData.id) ? " selected" : "");
+      btn.className = "team-card" + (isSelected ? " selected" : "");
+
+      const tag1 = p.tags?.[0] ?? "";
+      const tag2 = p.tags?.[1] ?? "";
+
       btn.innerHTML = `
-        <img src="${cardData.img}" alt="${cardData.name}" />
+        <img src="${p.img}" alt="${p.name}" />
         <div class="team-card-name">
-          <span>${cardData.name}</span>
-          <span class="pill">${selectedTeamCardIds.has(cardData.id) ? "Elegido" : "Elegir"}</span>
+          <div class="team-card-row">
+            <span>${p.name}</span>
+            <span class="pill">${isSelected ? "Elegido" : "Elegir"}</span>
+          </div>
+          <div class="team-tags" aria-label="Etiquetas">
+            <span class="tag-pill">${tag1}</span>
+            <span class="tag-pill">${tag2}</span>
+          </div>
         </div>
       `;
 
       btn.addEventListener("click", ()=>{
-        const isSelected = selectedTeamCardIds.has(cardData.id);
-        if (isSelected){
-          selectedTeamCardIds.delete(cardData.id);
-        } else {
-          if (selectedTeamCardIds.size >= 6) return;
-          selectedTeamCardIds.add(cardData.id);
+        if (isSelected) selectedTeamIds.delete(p.id);
+        else{
+          if (selectedTeamIds.size >= 6) return;
+          selectedTeamIds.add(p.id);
         }
         renderTeamSelection();
         updateTeamUI();
@@ -369,22 +389,24 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function commitTeam(){
-    const selectedCards = [...selectedTeamCardIds]
-      .map(id => CARDS.find(c => c.id === id))
+    const selected = [...selectedTeamIds]
+      .map(id => TEAM_MEMBERS.find(p => p.id === id))
       .filter(Boolean);
 
-    const selectedNames = new Set(selectedCards.map(c => c.name));
+    availableCharacters = selected.map(p => ({ id: p.id, name: p.name, tags: p.tags }));
+    availableCards = selected.map(p => ({
+      id: "card_" + p.id,
+      name: p.name,
+      img: p.img,
+      text: `Etiquetas: ${p.tags.join(" · ")}`
+    }));
 
-    availableCards = selectedCards;
-    availableCharacters = CHARACTERS.filter(ch => selectedNames.has(ch.name));
-
-    // seguridad
-    if (availableCards.length !== 6 || availableCharacters.length !== 6) return false;
+    if (availableCharacters.length !== 6 || availableCards.length !== 6) return false;
     return true;
   }
 
   // -------------------------
-  // Normalización tamaño sprite mapa
+  // Normalización tamaño sprite mapa (se mantiene)
   // -------------------------
   const spriteBoxCache = new Map();
   let referenceVisibleHeightPx = null;
@@ -965,7 +987,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Avatar -> Team
   startBtn.addEventListener("click", ()=>{
-    selectedTeamCardIds = new Set();
+    selectedTeamIds = new Set();
     teamConfirmBtn.disabled = true;
     teamCountEl.textContent = "0";
     teamHint.textContent = "Elige 6 personajes para continuar.";
@@ -974,7 +996,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Confirm team -> Start game
   teamConfirmBtn.addEventListener("click", ()=>{
-    if (selectedTeamCardIds.size !== 6) return;
+    if (selectedTeamIds.size !== 6) return;
     if (!commitTeam()) return;
     startGame();
   });
