@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", setAppHeightVar);
   window.addEventListener("orientationchange", setAppHeightVar);
 
-  const GAME_DURATION_MS = 5 * 60 * 1000; // 5 minutos
+  const GAME_DURATION_MS = 5 * 60 * 1000;
   let gameEndAt = null;
   let gameClockTimer = null;
 
@@ -60,18 +60,18 @@ document.addEventListener("DOMContentLoaded", () => {
     { id: "m30", title: "Reutilización creativa", internalTag: "Reciclaje", text: "Propón una forma de reutilizar un material común antes de desecharlo." }
   ];
 
-  // ✅ Nombres inventados (10)
+  // ✅ Nombres actualizados
   const TEAM_MEMBERS = [
-    { id: "p1",  name: "Nora Verde",     img: "images/personaje1.png",  tags: ["Sostenibilidad", "Reciclaje"] },
+    { id: "p1",  name: "Luis Verde",     img: "images/personaje1.png",  tags: ["Sostenibilidad", "Reciclaje"] },
     { id: "p2",  name: "Leo Ruta",       img: "images/personaje2.png",  tags: ["Transporte sostenible", "Cambio climático"] },
-    { id: "p3",  name: "Vera Watt",      img: "images/personaje3.png",  tags: ["Eficiencia energética", "Energías renovables"] },
+    { id: "p3",  name: "Ángel Watt",     img: "images/personaje3.png",  tags: ["Eficiencia energética", "Energías renovables"] },
     { id: "p4",  name: "Gael Eco",       img: "images/personaje4.png",  tags: ["Sostenibilidad", "Eficiencia energética"] },
     { id: "p5",  name: "Mía Circular",   img: "images/personaje5.png",  tags: ["Reciclaje", "Cambio climático"] },
     { id: "p6",  name: "Izan Movil",     img: "images/personaje6.png",  tags: ["Transporte sostenible", "Eficiencia energética"] },
-    { id: "p7",  name: "Luna Solar",     img: "images/personaje7.png",  tags: ["Energías renovables", "Sostenibilidad"] },
-    { id: "p8",  name: "Bruno Clima",    img: "images/personaje8.png",  tags: ["Cambio climático", "Energías renovables"] },
+    { id: "p7",  name: "Mario Solar",    img: "images/personaje7.png",  tags: ["Energías renovables", "Sostenibilidad"] },
+    { id: "p8",  name: "Vera Clima",     img: "images/personaje8.png",  tags: ["Cambio climático", "Energías renovables"] },
     { id: "p9",  name: "Sara Reusa",     img: "images/personaje9.png",  tags: ["Reciclaje", "Transporte sostenible"] },
-    { id: "p10", name: "Hugo Ahorro",    img: "images/personaje10.png", tags: ["Eficiencia energética", "Sostenibilidad"] }
+    { id: "p10", name: "María Ahorro",   img: "images/personaje10.png", tags: ["Eficiencia energética", "Sostenibilidad"] }
   ];
 
   const MISSION_LIFETIME_MS = 2 * 60 * 1000;
@@ -251,6 +251,17 @@ document.addEventListener("DOMContentLoaded", () => {
     return !(right < noSpawnRect.left || left > noSpawnRect.right || bottom < noSpawnRect.top || top > noSpawnRect.bottom);
   }
 
+  // ✅ poner icono deck como avatar elegido
+  function setDeckIconToAvatar(){
+    if (!deckBtn) return;
+    deckBtn.innerHTML = "";
+    const img = document.createElement("img");
+    img.className = "deck-avatar-icon";
+    img.alt = "Equipo";
+    img.src = AVATARS[avatarIndex]?.src || "images/avatar1.png";
+    deckBtn.appendChild(img);
+  }
+
   function goToStartScreen(){
     introScreen.classList.add("hidden");
     startScreen.classList.remove("hidden");
@@ -315,14 +326,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       btn.innerHTML = `
         <img src="${p.img}" alt="${p.name}" />
+        <div class="team-tags" aria-label="Etiquetas">
+          <span class="tag-pill">${tag1}</span>
+          <span class="tag-pill">${tag2}</span>
+        </div>
         <div class="team-card-name">
           <div class="team-card-row">
             <span>${p.name}</span>
             <span class="pill">${isSelected ? "Elegido" : "Elegir"}</span>
-          </div>
-          <div class="team-tags" aria-label="Etiquetas">
-            <span class="tag-pill">${tag1}</span>
-            <span class="tag-pill">${tag2}</span>
           </div>
         </div>
       `;
@@ -360,6 +371,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return true;
   }
 
+  // Normalización tamaño sprite mapa
   const spriteBoxCache = new Map();
   let referenceVisibleHeightPx = null;
 
@@ -455,6 +467,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Reloj oculto
   function startGameClock(){
     clearInterval(gameClockTimer);
     gameEndAt = performance.now() + GAME_DURATION_MS;
@@ -490,6 +503,9 @@ document.addEventListener("DOMContentLoaded", () => {
     specialUsed = false;
     specialArmed = false;
     setSpecialArmedUI(false);
+
+    // ✅ icono deck = avatar elegido
+    setDeckIconToAvatar();
 
     applySelectedAvatarToMap();
 
@@ -528,7 +544,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const state = {
       mission,
       pointEl: point,
-      remainingMs: MISSION_LIFETIME_MS,
+      remainingMs: 2 * 60 * 1000,
       lastTickAt: performance.now(),
       phase: "spawned",
       isPaused: false,
@@ -584,7 +600,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (completedMissionIds.has(missionId)) return;
     completedMissionIds.add(missionId);
     setProgress();
-    setScore(SCORE_LOSE);
+    setScore(0);
     releaseCharsForMission(missionId);
     removePoint(missionId);
   }
@@ -593,7 +609,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (completedMissionIds.has(missionId)) return;
     completedMissionIds.add(missionId);
     setProgress();
-    setScore(SCORE_WIN);
+    setScore(1);
     releaseCharsForMission(missionId);
     removePoint(missionId);
   }
@@ -675,15 +691,24 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!isAnyModalOpen()) setGlobalPause(false);
   }
 
+  // ✅ ahora se ven etiquetas en selección de misión
   function renderCharacters(){
     charactersGrid.innerHTML = "";
 
     availableCharacters.forEach(ch=>{
       const locked = lockedCharIds.has(ch.id);
+      const tags = Array.isArray(ch.tags) ? ch.tags : [];
+      const tagsLine = tags.length ? tags.join(" · ") : "";
+
       const card = document.createElement("div");
       card.className = "char" + (locked ? " locked" : "");
       card.innerHTML = `
-        <div><div class="name">${ch.name}</div></div>
+        <div>
+          <div class="name">${ch.name}</div>
+          <div style="margin-top:4px; font-size:11px; color: rgba(255,255,255,.75); line-height:1.2;">
+            ${tagsLine}
+          </div>
+        </div>
         <div class="pill">${locked ? "Ocupado" : "Elegir"}</div>
       `;
       card.addEventListener("click", ()=>{
@@ -975,6 +1000,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!gameRoot.classList.contains("hidden")) computeNoSpawnRect();
   });
 
+  // init
   renderAvatarCarousel(0);
 
   if (playerImg?.getAttribute("src")){
