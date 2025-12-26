@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gestión de recursos (Prototipo)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- INTRO -->
+    <section id="introScreen" class="intro">
+      <div class="intro-content">
+        <div class="intro-title">MONO GAME</div>
+        <img class="intro-logo" src="images/Mono.png" alt="Mono Gnomo" />
+
+        <div class="intro-actions">
+          <button id="introStartBtn" class="btn intro-btn" type="button">COMENZAR</button>
+          <button id="introInfoBtn" class="icon-btn intro-info-btn" type="button" aria-label="Info">ℹ️</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SELECTOR AVATAR -->
+    <section id="startScreen" class="start hidden">
+      <div class="start-card">
+        <div class="start-title">Elige tu avatar</div>
+        <div class="start-subtitle">Usa las flechas para cambiar y pulsa Comenzar.</div>
+
+        <div class="carousel">
+          <button id="prevAvatarBtn" class="carousel-btn" type="button" aria-label="Anterior">‹</button>
+
+          <div class="carousel-center">
+            <img id="avatarPreviewImg" class="carousel-img" src="images/buster1.PNG" alt="Buster" />
+            <div id="avatarPreviewName" class="carousel-name">Buster</div>
+          </div>
+
+          <button id="nextAvatarBtn" class="carousel-btn" type="button" aria-label="Siguiente">›</button>
+        </div>
+
+        <div class="carousel-dots" aria-hidden="true">
+          <span id="dot0" class="dot-indicator active"></span>
+          <span id="dot1" class="dot-indicator"></span>
+        </div>
+
+        <button id="startBtn" class="btn start-btn" type="button">Comenzar</button>
+      </div>
+    </section>
+
+    <!-- SELECCIÓN EQUIPO (6) -->
+    <section id="teamScreen" class="start hidden">
+      <div class="start-card">
+        <div class="start-title">Selecciona 6 personajes. Estos serán los disponibles para superar las misiones.</div>
+
+        <div class="team-top">
+          <div class="team-counter"><b>Seleccionados</b>: <span id="teamCount">0</span>/6</div>
+          <div id="teamHint" class="hint">Elige 6 personajes para continuar.</div>
+        </div>
+
+        <div id="teamGrid" class="team-grid"></div>
+
+        <div class="modal-actions end" style="margin-top:12px;">
+          <button id="teamConfirmBtn" class="btn" type="button" disabled>Confirmar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- JUEGO -->
+    <div id="gameRoot" class="game hidden">
+      <header class="topbar">
+        <div class="brand">
+          <div class="dot"></div>
+          <div>
+            <div class="title">Gestión de recursos</div>
+            <div class="subtitle">Toca los puntos rojos cuando aparezcan</div>
+          </div>
+        </div>
+
+        <div class="hud">
+          <button id="deckBtn" class="hud-icon-btn" type="button" aria-label="Ver cartas">
+            <span class="deck-icon" aria-hidden="true">🃏</span>
+          </button>
+
+          <div class="hud-card">
+            <div class="hud-label">Misiones</div>
+            <div id="progress" class="hud-value">0</div>
+          </div>
+        </div>
+      </header>
+
+      <main class="stage">
+        <div id="map" class="map" aria-label="Mapa del juego">
+          <img id="playerImg" class="buster-img" src="images/buster1.PNG" alt="Personaje seleccionado" />
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL INFO (inicio) -->
+  <div id="infoModal" class="modal" aria-hidden="true">
+    <div class="modal-card modal-card-small" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
+      <div class="modal-head">
+        <div>
+          <div id="infoTitle" class="modal-title">Cómo jugar</div>
+          <div class="modal-text">
+            Elige tu avatar y selecciona <b>6</b> personajes para tu equipo.<br/>
+            Durante <b>5 minutos</b> aparecerán misiones en el mapa.<br/>
+            Asigna <b>1 o 2</b> personajes: la misión se pondrá <b>amarilla</b> y se resolverá en <b>1 minuto</b>.<br/>
+            Cuantas más misiones completes, <b>mayor será tu puntuación</b>.<br/><br/>
+            <b>Habilidad especial:</b> puedes tocar tu avatar para activarla (solo 1 vez) y completar una misión automáticamente.
+          </div>
+        </div>
+        <button id="closeInfoBtn" class="icon-btn" type="button" aria-label="Cerrar">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL MISIÓN -->
+  <div id="missionModal" class="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="missionTitle">
+      <div class="modal-head">
+        <div>
+          <div id="missionTitle" class="modal-title">Misión</div>
+          <div id="missionText" class="modal-text">Texto de misión</div>
+        </div>
+        <button id="closeModalBtn" class="icon-btn" type="button" aria-label="Cerrar">✕</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title">Elige 1 o 2 personajes</div>
+        <div id="charactersGrid" class="grid"></div>
+        <div id="pickHint" class="hint">Selecciona al menos 1 personaje.</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="modal-actions end">
+        <button id="confirmBtn" class="btn" type="button">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL RULETA -->
+  <div id="rouletteModal" class="modal" aria-hidden="true">
+    <div class="modal-card roulette-card" role="dialog" aria-modal="true" aria-labelledby="rouletteTitle">
+      <div class="modal-head">
+        <div>
+          <div id="rouletteTitle" class="modal-title">Resolviendo misión…</div>
+          <div id="rouletteSub" class="modal-text">La ruleta decidirá el resultado según tu probabilidad.</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="roulette-wrap">
+        <div class="roulette">
+          <div class="roulette-pointer">▼</div>
+          <div id="rouletteWheel" class="roulette-wheel"></div>
+        </div>
+        <div id="rouletteOutcome" class="roulette-outcome"></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="modal-actions">
+        <button id="rouletteOkBtn" class="btn" type="button" disabled>Continuar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL FINAL -->
+  <div id="finalModal" class="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="finalTitle">
+      <div class="modal-head">
+        <div>
+          <div id="finalTitle" class="modal-title">Fin de la partida</div>
+          <div class="modal-text">¡Tiempo!</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="final-score">
+        <div class="final-label">Puntuación final</div>
+        <div id="finalScore" class="final-value">0</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="modal-actions">
+        <button id="playAgainBtn" class="btn" type="button">Jugar otra vez</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL BARAJA / CARTAS -->
+  <div id="deckModal" class="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="deckTitle">
+      <div class="modal-head">
+        <div>
+          <div id="deckTitle" class="modal-title">Cartas</div>
+          <div class="modal-text">Pulsa una carta para ver su info.</div>
+        </div>
+        <button id="closeDeckBtn" class="icon-btn" type="button" aria-label="Cerrar">✕</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div id="deckGrid" class="deck-grid"></div>
+    </div>
+  </div>
+
+  <!-- POPUP INFO CARTA -->
+  <div id="cardInfoModal" class="modal" aria-hidden="true">
+    <div class="modal-card modal-card-small" role="dialog" aria-modal="true" aria-labelledby="cardInfoTitle">
+      <div class="modal-head">
+        <div>
+          <div id="cardInfoTitle" class="modal-title">Carta</div>
+          <div id="cardInfoText" class="modal-text">Prueba</div>
+        </div>
+        <button id="closeCardInfoBtn" class="icon-btn" type="button" aria-label="Cerrar">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HABILIDAD ESPECIAL -->
+  <div id="specialModal" class="modal" aria-hidden="true">
+    <div class="modal-card modal-card-small" role="dialog" aria-modal="true" aria-labelledby="specialTitle">
+      <div class="modal-head">
+        <div>
+          <div id="specialTitle" class="modal-title">¿Quieres activar su habilidad especial?</div>
+          <div class="modal-text">Pulsa sobre una misión y la completa automáticamente.</div>
+        </div>
+        <button id="closeSpecialBtn" class="icon-btn" type="button" aria-label="Cerrar">✕</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="modal-actions end">
+        <button id="specialCancelBtn" class="btn btn-ghost" type="button">Cancelar</button>
+        <button id="specialAcceptBtn" class="btn" type="button">Activar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
