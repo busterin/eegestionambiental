@@ -1,3 +1,4 @@
+
 :root{
   --bg: #d1c29f; /* Fondo tipo pergamino (color claro similar al pergamino) */
   --panel:#0f1a33;
@@ -17,56 +18,89 @@
 
 /* Fondo tipo pergamino antiguo */
 body {
-  background: url('images/pergamino.png') no-repeat center center fixed; /* Asegúrate de tener una imagen de pergamino en la carpeta "images" */
+  background: url('images/pergamino.png') no-repeat center center fixed;
   background-size: cover;
   color: var(--text);
 }
 
-/* CENTRAR TODO EL CONTENIDO DE LA PANTALLA DE INICIO */
-.intro-content {
-  width: min(900px, 100%);
+/* Ajustar la estructura del contenedor de personajes */
+.characters-container {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 0;
+  background: rgba(0, 0, 0, 0.15); /* Fondo ligero para resaltar los personajes */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-width: 100%;
+  z-index: 10;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
+  border-top: 2px solid #fff;
+}
+
+/* Personajes en hilera */
+.character-item {
+  width: 80px;
+  height: 100px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.character-item:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.character-item.selected {
+  border-color: var(--accent);
+  background: rgba(58, 208, 255, 0.2);
+}
+
+/* Ajustes para el mapa y no permitir scroll en pantallas pequeñas */
+.map {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  border-radius: var(--radius);
+  background: radial-gradient(800px 500px at 70% 30%, rgba(255,255,255,.14), transparent 55%),
+              linear-gradient(0deg, rgba(255,255,255,.18), rgba(255,255,255,.18)),
+              repeating-linear-gradient(90deg, rgba(255,255,255,.18), rgba(255,255,255,.18) 1px, transparent 1px, transparent 56px),
+              repeating-linear-gradient(0deg, rgba(255,255,255,.18), rgba(255,255,255,.18) 1px, transparent 1px, transparent 56px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+  margin-bottom: 100px; /* Espacio para los personajes */
+}
+
+/* Asegurar que el mapa se ajuste bien sin scroll */
+.stage {
+  flex: 1 1 auto;
+  padding: 10px 14px 12px;
+  display: flex;
+  min-height: 0;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 26px;
-  text-align: center;
-  height: 100%; /* Para asegurar que se mantenga centrado */
-  padding: 0 18px;
+  justify-content: space-between;
 }
 
-/* Alineación de los botones de inicio */
-.intro-actions {
-  margin-top: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  width: min(520px, 100%);
-}
+@media (max-width: 520px) {
+  .characters-container {
+    flex-direction: row;
+    overflow-x: scroll;
+    gap: 10px;
+    padding: 10px 0;
+  }
 
-/* Ajustes del logo para mantenerlo centrado */
-.intro-logo {
-  width: min(760px, 100%);
-  max-height: 42vh;
-  object-fit: contain;
-  user-select: none;
-  pointer-events: none;
-  filter: drop-shadow(0 18px 26px rgba(0,0,0,.28));
-  margin-top: 2px;
-}
-
-/* Ajustes en los botones */
-.intro-btn {
-  width: min(280px, 100%);
-}
-
-.intro-info-btn {
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  font-size: 18px;
+  .character-item {
+    width: 60px;
+    height: 80px;
+  }
 }
