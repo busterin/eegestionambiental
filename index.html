@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -112,6 +111,136 @@
           </div>
         </div>
         <button id="closeInfoBtn" class="icon-btn" type="button" aria-label="Cerrar">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL MISIÓN -->
+  <div id="missionModal" class="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="missionTitle">
+      <div class="modal-head">
+        <div>
+          <div id="missionTitle" class="modal-title">Misión</div>
+          <div id="missionText" class="modal-text">Texto de misión</div>
+        </div>
+        <button id="closeModalBtn" class="icon-btn" type="button" aria-label="Cerrar">✕</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-title">Elige 1 o 2 personajes</div>
+        <div id="charactersGrid" class="grid"></div>
+        <div id="pickHint" class="hint">Selecciona al menos 1 personaje.</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="modal-actions end">
+        <button id="confirmBtn" class="btn" type="button">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL RULETA -->
+  <div id="rouletteModal" class="modal" aria-hidden="true">
+    <div class="modal-card roulette-card" role="dialog" aria-modal="true" aria-labelledby="rouletteTitle">
+      <div class="modal-head">
+        <div>
+          <div id="rouletteTitle" class="modal-title">Resolviendo misión…</div>
+          <div id="rouletteSub" class="modal-text">La ruleta decidirá el resultado según tu probabilidad.</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="roulette-wrap">
+        <div class="roulette">
+          <div class="roulette-pointer">▼</div>
+          <div id="rouletteWheel" class="roulette-wheel"></div>
+        </div>
+        <div id="rouletteOutcome" class="roulette-outcome"></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="modal-actions">
+        <button id="rouletteOkBtn" class="btn" type="button" disabled>Continuar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL FINAL -->
+  <div id="finalModal" class="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="finalTitle">
+      <div class="modal-head">
+        <div>
+          <div id="finalTitle" class="modal-title">Fin de la partida</div>
+          <div class="modal-text">¡Tiempo!</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="final-score">
+        <div class="final-label">Puntuación final</div>
+        <div id="finalScore" class="final-value">0</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="modal-actions">
+        <button id="playAgainBtn" class="btn" type="button">Jugar otra vez</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL BARAJA / CARTAS -->
+  <div id="deckModal" class="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="deckTitle">
+      <div class="modal-head">
+        <div>
+          <div id="deckTitle" class="modal-title">Equipo</div>
+          <div class="modal-text">Pulsa un personaje para ver su info.</div>
+        </div>
+        <button id="closeDeckBtn" class="icon-btn" type="button" aria-label="Cerrar">✕</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div id="deckGrid" class="deck-grid"></div>
+    </div>
+  </div>
+
+  <!-- POPUP INFO CARTA -->
+  <div id="cardInfoModal" class="modal" aria-hidden="true">
+    <div class="modal-card modal-card-small" role="dialog" aria-modal="true" aria-labelledby="cardInfoTitle">
+      <div class="modal-head">
+        <div>
+          <div id="cardInfoTitle" class="modal-title">Personaje</div>
+          <div id="cardInfoText" class="modal-text">Prueba</div>
+        </div>
+        <button id="closeCardInfoBtn" class="icon-btn" type="button" aria-label="Cerrar">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HABILIDAD ESPECIAL -->
+  <div id="specialModal" class="modal" aria-hidden="true">
+    <div class="modal-card modal-card-small" role="dialog" aria-modal="true" aria-labelledby="specialTitle">
+      <div class="modal-head">
+        <div>
+          <div id="specialTitle" class="modal-title">¿Quieres activar su habilidad especial?</div>
+          <div class="modal-text">Pulsa sobre una misión y la completa automáticamente.</div>
+        </div>
+        <button id="closeSpecialBtn" class="icon-btn" type="button" aria-label="Cerrar">✕</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="modal-actions end">
+        <button id="specialCancelBtn" class="btn btn-ghost" type="button">Cancelar</button>
+        <button id="specialAcceptBtn" class="btn" type="button">Activar</button>
       </div>
     </div>
   </div>
